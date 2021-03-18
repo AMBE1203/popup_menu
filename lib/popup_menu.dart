@@ -195,16 +195,7 @@ class PopupMenu {
           dismiss();
         },
         child: Container(
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
+
           child: Stack(
           children: <Widget>[
             // triangle arrow
@@ -223,6 +214,16 @@ class PopupMenu {
               child: Container(
                 width: menuWidth(),
                 height: menuHeight(),
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
                 child: Column(
                   children: <Widget>[
                     ClipRRect(
