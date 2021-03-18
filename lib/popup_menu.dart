@@ -11,7 +11,6 @@ abstract class MenuItemProvider {
   String get menuTitle;
   Widget get menuImage;
   TextStyle get menuTextStyle;
-  TextAlign get menuTextAlign;
 }
 
 class MenuItem extends MenuItemProvider {
@@ -19,9 +18,8 @@ class MenuItem extends MenuItemProvider {
   String title; // 菜单标题
   var userInfo; // 额外的菜单荐信息
   TextStyle textStyle;
-  TextAlign textAlign;
 
-  MenuItem({this.title, this.image, this.userInfo, this.textStyle, this.textAlign});
+  MenuItem({this.title, this.image, this.userInfo, this.textStyle});
 
   @override
   Widget get menuImage => image;
@@ -32,10 +30,6 @@ class MenuItem extends MenuItemProvider {
   @override
   TextStyle get menuTextStyle =>
       textStyle ?? TextStyle(color: Color(0xffc5c5c5), fontSize: 10.0);
-  
-  @override
-  TextAlign get menuTextAlign =>
-      textAlign ?? TextAlign.center;  
 }
 
 enum MenuType { big, oneLine }
@@ -44,7 +38,7 @@ typedef MenuClickCallback = Function(MenuItemProvider item);
 typedef PopupMenuStateChanged = Function(bool isShow);
 
 class PopupMenu {
-  static var itemWidth = 72.0;
+  static var itemWidth =250.0;
   static var itemHeight = 65.0;
   static var arrowHeight = 10.0;
   OverlayEntry _entry;
@@ -470,14 +464,13 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
     } else {
       // only text
       return Container(
-        child: Center(
-          child: Material(
-            color: Colors.transparent,
-            child: Text(
-              widget.item.menuTitle,
-              style: widget.item.menuTextStyle,
-              textAlign: widget.item.menuTextAlign,
-            ),
+        margin: EdgeInsets.only(left: 33),
+        alignment: Alignment.centerLeft,
+        child:Material(
+          color: Colors.transparent,
+          child: Text(
+            widget.item.menuTitle,
+            style: widget.item.menuTextStyle,
           ),
         ),
       );
