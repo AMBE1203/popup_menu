@@ -8,18 +8,23 @@ import 'package:flutter/material.dart';
 import 'triangle_painter.dart';
 
 abstract class MenuItemProvider {
+  String get menuCd;
   String get menuTitle;
   Widget get menuImage;
   TextStyle get menuTextStyle;
 }
 
 class MenuItem extends MenuItemProvider {
+  String code;
   Widget image; // 图标名称
   String title; // 菜单标题
   var userInfo; // 额外的菜单荐信息
   TextStyle textStyle;
 
-  MenuItem({this.title, this.image, this.userInfo, this.textStyle});
+  MenuItem({this.code,this.title, this.image, this.userInfo, this.textStyle});
+
+  @override
+  String get menuCd =>code;
 
   @override
   Widget get menuImage => image;
@@ -137,13 +142,13 @@ class PopupMenu {
   }
 
   void _calculatePosition(BuildContext context) {
-    _col = _calculateColCount();
-    _row = _calculateRowCount();
-    _offset = _calculateOffset(PopupMenu.context);
+    col = calculateColCount();
+    row = calculateRowCount();
+    offset = calculateOffset(PopupMenu.context);
   }
 
   Offset _calculateOffset(BuildContext context) {
-    double dx = _showRect.left + _showRect.width / 2.0 - menuWidth() / 2.0;
+    double dx = showRect.left + showRect.width / 2.0 - menuWidth() / 2.0;
     if (dx < 10.0) {
       dx = 10.0;
     }
@@ -156,7 +161,7 @@ class PopupMenu {
     double dy = _showRect.top - menuHeight();
     if (dy <= MediaQuery.of(context).padding.top + 10) {
       // The have not enough space above, show menu under the widget.
-      dy = arrowHeight + _showRect.height + _showRect.top;
+      dy = arrowHeight + showRect.height + showRect.top;
       _isDown = false;
     } else {
       dy -= arrowHeight;
@@ -200,11 +205,11 @@ class PopupMenu {
           children: <Widget>[
             // triangle arrow
             Positioned(
-              left: _showRect.left + _showRect.width / 2.0 - 7.5,
+              left: showRect.left + showRect.width / 2.0 - 7.5,
               top: _isDown ? offset.dy + menuHeight() : offset.dy - arrowHeight,
               child: CustomPaint(
                 size: Size(15.0, arrowHeight),
-                painter: TrianglePainter(isDown: _isDown, color: _backgroundColor),
+                painter: TrianglePainter(isDown: isDown, color: backgroundColor),
               ),
             ),
             // menu content
@@ -254,7 +259,7 @@ class PopupMenu {
     List<Widget> rows = [];
     for (int i = 0; i < _row; i++) {
       Color color =
-          (i < _row - 1 && _row != 1) ? _lineColor : Colors.transparent;
+          (i < row - 1 && row != 1) ? _lineColor : Colors.transparent;
       Widget rowWidget = Container(
         decoration:
             BoxDecoration(border: Border(bottom: BorderSide(color: color))),
@@ -273,7 +278,7 @@ class PopupMenu {
   // 创建一行的item,  row 从0开始算
   List<Widget> _createRowItems(int row) {
     List<MenuItemProvider> subItems =
-        items.sublist(row * _col, min(row * _col + _col, items.length));
+        items.sublist(row  _col, min(row  col + col, items.length));
     List<Widget> itemWidgets = [];
     int i = 0;
     for (var item in subItems) {
@@ -313,7 +318,7 @@ class PopupMenu {
     }
 
     int itemCount = items.length;
-    if (_maxColumn != 4 && _maxColumn > 0) {
+    if (maxColumn != 4 && maxColumn > 0) {
       return _maxColumn;
     }
 
