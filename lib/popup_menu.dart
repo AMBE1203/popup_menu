@@ -8,18 +8,23 @@ import 'package:flutter/material.dart';
 import 'triangle_painter.dart';
 
 abstract class MenuItemProvider {
+  String get menuCd;
   String get menuTitle;
   Widget get menuImage;
   TextStyle get menuTextStyle;
 }
 
 class MenuItem extends MenuItemProvider {
+  String code;
   Widget image; // 图标名称
   String title; // 菜单标题
   var userInfo; // 额外的菜单荐信息
   TextStyle textStyle;
 
-  MenuItem({this.title, this.image, this.userInfo, this.textStyle});
+  MenuItem({this.code,this.title, this.image, this.userInfo, this.textStyle});
+
+  @override
+  String get menuCd =>code;
 
   @override
   Widget get menuImage => image;
