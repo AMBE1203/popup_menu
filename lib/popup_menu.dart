@@ -187,9 +187,9 @@ class PopupMenu {
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(
         behavior: HitTestBehavior.translucent,
-//         onTap: () {
-//           dismiss();
-//         },
+         onTap: () {
+           dismiss();
+         },
 //        onTapDown: (TapDownDetails details) {
 //          dismiss();
 //        },
