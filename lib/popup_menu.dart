@@ -177,6 +177,9 @@ class PopupMenu {
 
   // This height exclude the arrow
   double menuHeight() {
+    if (itemHeight * _row >= screenHeight / 2){
+      return screenHeight /2;
+    }
     return itemHeight * _row;
   }
 
@@ -184,21 +187,21 @@ class PopupMenu {
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () {
-          dismiss();
-        },
+//         onTap: () {
+//           dismiss();
+//         },
 //        onTapDown: (TapDownDetails details) {
 //          dismiss();
 //        },
-        // onPanStart: (DragStartDetails details) {
-        //   dismiss();
-        // },
-        onVerticalDragStart: (DragStartDetails details) {
-          dismiss();
-        },
-        onHorizontalDragStart: (DragStartDetails details) {
-          dismiss();
-        },
+//         // onPanStart: (DragStartDetails details) {
+//         //   dismiss();
+//         // },
+//         onVerticalDragStart: (DragStartDetails details) {
+//           dismiss();
+//         },
+//         onHorizontalDragStart: (DragStartDetails details) {
+//           dismiss();
+//         },
         child: Container(
 
           child: Stack(
@@ -239,7 +242,8 @@ class PopupMenu {
                             decoration: BoxDecoration(
                                 color: _backgroundColor,
                                 borderRadius: BorderRadius.circular(10.0)),
-                            child: Column(
+                            child: ListView(
+                              padding: EdgeInsets.zero,
                               children: _createRows(),
                             ),
                           )),
@@ -262,7 +266,7 @@ class PopupMenu {
       (i < _row - 1 && _row != 1) ? _lineColor : Colors.transparent;
       Widget rowWidget = Container(
         decoration:
-        BoxDecoration(border: Border(bottom: BorderSide(color: color))),
+        BoxDecoration( border: Border(bottom: BorderSide(color: color))),
         height: itemHeight,
         child: Row(
           children: _createRowItems(i),
@@ -346,6 +350,12 @@ class PopupMenu {
     double width = window.physicalSize.width;
     double ratio = window.devicePixelRatio;
     return width / ratio;
+  }
+
+  double get screenHeight {
+    double height = window.physicalSize.height;
+    double ratio = window.devicePixelRatio;
+    return height / ratio;
   }
 
   Widget _createMenuItem(MenuItemProvider item, bool showLine) {
